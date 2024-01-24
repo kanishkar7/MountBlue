@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input: Get the number of games played
+        int n = scanner.nextInt();
+
+        // Input: Get the scores of each game
+        int[] scores = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            scores[i] = scanner.nextInt();
+        }
+
+        // Calculate and print the result
+        int[] result = calculateRecordBreaks(scores);
+        System.out.println(result[0] + " " + result[1]);
+    }
+
+    static int[] calculateRecordBreaks(int[] scores) {
+        int minCount = 0;
+        int maxCount = 0;
+
+        // Initialize min and max with the first score
+        int minScore = scores[0];
+        int maxScore = scores[0];
+
+        // Iterate through the scores to find record breaks
+        for (int i = 1; i < scores.length; i++) {
+            if (scores[i] < minScore) {
+                minScore = scores[i];
+                minCount++;
+            } else if (scores[i] > maxScore) {
+                maxScore = scores[i];
+                maxCount++;
+            }
+        }
+
+        return new int[]{maxCount, minCount};
+    }
+}
