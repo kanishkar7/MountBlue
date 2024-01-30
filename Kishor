@@ -1,0 +1,89 @@
+import java.util.*;
+
+class TrekkingDetailsMain {
+    private Map<String, Integer> detailsMap;
+
+    // Constructors
+    public TrekkingDetailsMain() {
+        this.detailsMap = new HashMap<>();
+    }
+
+    // Getters and Setters
+    public Map<String, Integer> getDetailsMap() {
+        return detailsMap;
+    }
+
+    public void setDetailsMap(Map<String, Integer> detailsMap) {
+        this.detailsMap = detailsMap;
+    }
+
+    // Requirement 1: Filter the mountains based on the minimumPeak and maximumPeak
+    public int findCountOfMountainsBasedOnThePeakPoint(int minimumPeak, int maximumPeak) {
+        int count = 0;
+        for (int peakPoint : detailsMap.values()) {
+            if (peakPoint >= minimumPeak && peakPoint <= maximumPeak) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Requirement 2: Filter the mountain names based on the peak point
+    public List<String> findMountainsBasedOnPeakPoint(int peakPoint) {
+        List<String> filteredMountains = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : detailsMap.entrySet()) {
+            if (entry.getValue() <= peakPoint) {
+                filteredMountains.add(entry.getKey());
+            }
+        }
+        return filteredMountains;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter number of details to be added");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+
+        // Create an object of TrekkingDetailsMain class
+        TrekkingDetailsMain trekkingDetailsMain = new TrekkingDetailsMain();
+
+        System.out.println("Enter the details (Mountain name: Peak point):");
+        for (int i = 0; i < n; i++) {
+            String input = scanner.nextLine();
+            String[] details = input.split(":");
+            String mountainName = details[0].trim();
+            int peakPoint = Integer.parseInt(details[1].trim());
+            trekkingDetailsMain.getDetailsMap().put(mountainName, peakPoint);
+        }
+
+        System.out.println("Enter the minimum and maximum peak points");
+        int minimumPeak = scanner.nextInt();
+        int maximumPeak = scanner.nextInt();
+
+        // Requirement 1
+        int totalCount = trekkingDetailsMain.findCountOfMountainsBasedOnThePeakPoint(minimumPeak, maximumPeak);
+        if (totalCount > 0) {
+            System.out.println("The total count of mountains are " + totalCount);
+
+            // Requirement 2
+            System.out.println("Enter the peak point to be searched");
+            int searchPeakPoint = scanner.nextInt();
+            List<String> mountainsBasedOnCondition = trekkingDetailsMain.findMountainsBasedOnPeakPoint(searchPeakPoint);
+
+            if (!mountainsBasedOnCondition.isEmpty()) {
+                System.out.println("Mountains based on the condition are");
+                for (String mountain : mountainsBasedOnCondition) {
+                    System.out.println(mountain);
+                }
+            } else {
+                System.out.println("No Mountains were found");
+            }
+        } else {
+            System.out.println("No mountains were found");
+        }
+    }
+}
