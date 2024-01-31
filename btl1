@@ -1,0 +1,67 @@
+import java.util.*;
+
+public class UserInterface {
+
+public static Insurance extractDetails(String insuranceDetails) {
+
+String[] details = insuranceDetails.split(":");
+
+if (details.length == 5) {
+
+return new Insurance(details[0], details[1], Double.parseDouble(details[2]), details[3],
+
+Integer.parseInt(details[4]));
+
+} else {
+
+return null;
+
+}
+
+}
+
+public static void main(String[] args) {
+
+Scanner scanner = new Scanner(System.in);
+
+System.out.println("Enter the details:");
+
+String input = scanner.nextLine();
+
+Insurance insurance = extractDetails(input);
+
+if (insurance != null) {
+
+System.out.println("Policy Number: " + insurance.getPolicyNumber());
+
+System.out.println("Insurance Provider: " + insurance.getInsuranceProvider());
+
+System.out.println("Coverage Amount: " + insurance.getCoverageAmount());
+
+System.out.println("Coverage Type: " + insurance.getCoverageType());
+
+System.out.println("Duration in years: " + insurance.getDurationInYears());
+
+double maturityAmount = insurance.calculateMaturityAmount();
+
+if (maturityAmount != -1) {
+
+System.out.println("Maturity Amount: " + maturityAmount);
+
+} else {
+
+System.out.println("Invalid details");
+
+System.out.println("Explanation: As durationInYears is invalid.");
+
+}
+
+} else {
+
+System.out.println("Invalid details");
+
+}
+
+}
+
+}
